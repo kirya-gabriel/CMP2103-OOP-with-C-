@@ -26,3 +26,94 @@
 // Enter the residence status: 0
 // Enter the taxable income: 4,000,000
 // Tax is 118000.
+
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+using namespace std;
+
+static double parse_amount(const string &s)
+{
+    string t;
+    for(char c:s)
+    if(isdigit((unsigned char)c) || c == '.' || c == '-' )
+    t.push_back(c);
+    if(t.empty())
+    return 0.0;
+    return stod(t);
+
+}
+long long compute_tax(bool resident, double income)
+{
+    const double b_1 = 2820000.0;
+    const double b_2 = 4020000.0;
+    const double b_3 = 4920000.0;
+    const double top = 120000000.0;
+
+    double tax = 0.0;
+
+    if(resident)
+    {
+        if(income <= b_1)
+        {
+            tax = 0.0;
+        }
+        else if (income <= b_2)
+        {
+            tax = (income - b_1) * 0.10;
+        }
+        else if(income <= b_3)
+        {
+            tax = (income - b_2) * 0.20 + 120000.0;
+        }
+        else if(income <= top)
+        {
+            tax = (income - b_3) * 0.30 + 300000.0;
+        }
+        else 
+        {
+            tax = (income - b_3) * 0.30 + 300000.0 + (income - top) * 0.10;  
+        }
+    }
+        else
+        {
+            if(income <= b_2){
+                tax = income * 0.10;
+            }
+            else if(income <= b_3)
+            {
+                tax = (income - b_2) * 0.20 + 402000.0;
+            }
+            else if(income <= top)
+            {
+                tax = (income - b_3) * 0.30 + 582000.0;
+            }
+            else
+            {
+                tax = (income - b_3) * 0.30 + 582000.0 + (income - top) * 0.10;
+            }
+        }
+    return (long long)llround(tax);
+    }
+
+
+int main()
+{
+    cout << "(0-Resident, 1-Non-resident)" << endl;
+    cout << "Enter the residence status: ";
+    int status;
+    if(!(cin >> status))
+    return 0;
+
+    cout << "Enter the taxable income:";
+    string income_str;
+    if(!(cin >> income_str))
+    return 0;
+
+    double income = parse_amount(income_str);
+    long long tax = compute_tax(status == 0, income);
+
+    cout << "Tax is" << tax << "." << endl;
+    return 0;
+}
