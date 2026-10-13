@@ -1,0 +1,66 @@
+#include <iostream>
+
+class Rectangle {
+    private:
+
+    double width;
+    double length;
+
+    public:
+
+    void setWidth(double w){
+        if (w > 0){
+            width = w;
+        } else {
+            std::cout << "Width must be positive. Setting default to 1.0\n";
+            width = 1.0;
+        }
+    }
+
+    void setLength(double l){
+        if (l > 0){
+            length = l;
+        } else {
+            std::cout << "Length must be positive. Setting default to 1.0\n";
+            length = 1.0;
+        }
+    }
+    double getWidth() const {
+        return width;
+    }
+    double getLength() const {
+        return length;
+    }
+    double calculateArea() const {
+        return width * length;
+    }
+    double calculatePerimeter() const {
+        return 2 * (width + length);
+    }
+};
+
+int main() {
+    Rectangle rect;
+
+    rect.setWidth(5.5);
+    rect.setLength(10.0);
+
+    std::cout << "--- Rectangle Dimensions ---" << std::endl;
+    std::cout << "Width: " << rect.getWidth() << std::endl;
+    std::cout << "Length: " << rect.getLength() << std::endl;
+
+    std::cout << "\n--- Calculations ---" << std::endl;
+    std::cout << "Area: " << rect.calculateArea() << std::endl;
+    std::cout << "Perimeter: " << rect.calculatePerimeter() << std::endl;
+
+
+    std::cout << "\n--- Second Rectangle Example ---" << std::endl;
+    Rectangle rect2;
+    rect2.setWidth(3.0);
+    rect.setLength(7.0);
+    std::cout << "Width: " << rect2.getWidth() << ", Length: " << rect2.getLength() << std::endl;
+    std::cout << "Area: " << rect2.calculateArea() << std::endl;
+    std::cout << "Perimater: " << rect2.calculatePerimeter() << std::endl;
+
+    return 0;
+}
